@@ -130,12 +130,12 @@ def combined_stcon(graph, s, t):
                     
                     P.update(A)
                 
-                # Check memory constraint limit
-                # In theory, the limit is n/lambda. For small graphs, this constraint fails unless 
-                # we strictly subtract paths of length L^r - 1 (which requires graph augmentation).
-                # To ensure functional correctness on small graphs, we bypass the strict threshold check.
-                limit = float('inf')
-                if len(S) + len(S_prime.union(P)) > limit:
+                # Check memory constraint limit (Corollary 4.2: n/lambda)
+                # We count only NEW nodes not already in S, since self-loops
+                # cause SPR to re-discover existing nodes.
+                new_nodes = S_prime.union(P) - S
+                limit = max(math.ceil(n / lambd) + 2, 10)
+                if len(new_nodes) > limit:
                     valid_j = False
                     break
                 else:

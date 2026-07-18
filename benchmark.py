@@ -106,8 +106,10 @@ def sublinear_stcon(n, adj_list, s, t):
                     P.update(A)
                 
                 # Space Constraint Check (This guarantees sublinear space!)
+                # Count only genuinely NEW nodes not already in S
+                new_nodes = S_prime.union(P) - S
                 limit = math.ceil(n / lambd) + 2
-                if len(S) + len(S_prime.union(P)) > limit:
+                if len(new_nodes) > limit:
                     valid_j = False
                     break
                 else:

@@ -44,8 +44,10 @@ export function* stconAlgorithm(graph, s, t) {
         }
 
         // Limit check (Strictly enforcing Sublinear Space bound)
+        // Count only genuinely NEW nodes not already in S
+        const newNodes = new Set([...S_prime, ...P].filter(v => !S.has(v)));
         const limit = Math.max(Math.ceil(n / lambd) + 2, 10); 
-        if (S.size + new Set([...S_prime, ...P]).size > limit) {
+        if (newNodes.size > limit) {
           valid_j = false;
           break;
         } else {
@@ -181,8 +183,10 @@ export const stconCodeString = `export function* stconAlgorithm(graph, s, t) {
         }
 
         // Limit check (Strictly enforcing Sublinear Space bound)
+        // Count only genuinely NEW nodes not already in S
+        const newNodes = new Set([...S_prime, ...P].filter(v => !S.has(v)));
         const limit = Math.max(Math.ceil(n / lambd) + 2, 10); 
-        if (S.size + new Set([...S_prime, ...P]).size > limit) {
+        if (newNodes.size > limit) {
           valid_j = false;
           break;
         } else {
