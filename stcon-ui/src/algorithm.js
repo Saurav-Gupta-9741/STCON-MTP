@@ -43,8 +43,8 @@ export function* stconAlgorithm(graph, s, t) {
           }
         }
 
-        // Limit check
-        const limit = Infinity; // Bypassed for UI
+        // Limit check (Strictly enforcing Sublinear Space bound)
+        const limit = Math.max(Math.ceil(n / lambd) + 2, 10); 
         if (S.size + new Set([...S_prime, ...P]).size > limit) {
           valid_j = false;
           break;
@@ -180,8 +180,8 @@ export const stconCodeString = `export function* stconAlgorithm(graph, s, t) {
           A.forEach(v => P.add(v));
         }
 
-        // Limit check
-        const limit = Math.ceil(n / lambd) + 2; 
+        // Limit check (Strictly enforcing Sublinear Space bound)
+        const limit = Math.max(Math.ceil(n / lambd) + 2, 10); 
         if (S.size + new Set([...S_prime, ...P]).size > limit) {
           valid_j = false;
           break;
