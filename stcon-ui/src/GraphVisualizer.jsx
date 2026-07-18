@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cytoscape from 'cytoscape';
 
-const GraphVisualizer = ({ graph, activeNodes, isBuildMode, onGraphUpdate }) => {
+const GraphVisualizer = ({ graph, activeNodes, isBuildMode, onGraphUpdate, algorithmType }) => {
   const containerRef = useRef(null);
   const cyRef = useRef(null);
   
@@ -142,7 +142,8 @@ const GraphVisualizer = ({ graph, activeNodes, isBuildMode, onGraphUpdate }) => 
 
     if (activeNodes) {
       activeNodes.forEach(nodeId => {
-        cyRef.current.getElementById(nodeId.toString()).addClass(window.activeAlgorithmType === 'bfs' ? 'bfs-active' : 'active');
+        const algoType = algorithmType || window.activeAlgorithmType || 'stcon';
+        cyRef.current.getElementById(nodeId.toString()).addClass(algoType === 'bfs' ? 'bfs-active' : 'active');
       });
     }
 
